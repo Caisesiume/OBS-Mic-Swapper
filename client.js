@@ -2,20 +2,43 @@ const OBSWebSocket = require('obs-websocket-js').default;
 const auth = require('./auth.json');
 const obs = new OBSWebSocket();
 
-const ip = 'ws://' + auth.ip + ':' + auth.port;
-const pass = auth.pass;
 
-const MIC = 'Mic';
-const CAM = 'Cam';
-const TIMEOUT = 10*1000; // 10 sec
+/**
+ * __________________________________________________________
+ * 
+ * BELOW IS EVERYTHING THAT HAS TO DO WITH OBS AND ITS WS
+ * 
+ * EVERYTHING ABOVE THIS COMMENT IS TWITCH CHAT RELATED
+ * __________________________________________________________
+ */
 
+ const ip = 'ws://' + auth.ip + ':' + auth.port;
+ const pass = auth.pass;
+ 
+ const MIC = 'Mic';
+ const CAM = 'Cam';
+ const TIMEOUT = 10*1000; // 10 sec
 
-(async () => {
+runOBS();
+
+ /**
+  * Runs in 3 steps
+  * 
+  * 1. Connects to the remote OBS app via Websocket
+  * 2. Toggles the mute state of inputDevice MIC and CAM, and sets a timer of TIMEOUT seconds
+  *    for both inputDevice's state to be reset to what they were before this function was executed.
+  * 3. Disconnects the client from the websocket.
+  */
+async function runOBS() {
     await connectToWs();
-    // await getMics();
-    await swapActiveMic()
-})();
+    await swapActiveMic();
+    setTimeout(closeConnection, TIMEOUT + 2000);
+}
 
+
+/**
+ * Connection through websocket to OBS
+ */
 obs.on('ConnectionOpened', () => {
     console.log('Connection Opened');
 });
@@ -46,18 +69,6 @@ async function swapActiveMic() {
     }
 }
 
-/**
- * Retrives all input devices and adds them to the array
- */
-async function getMics() {
-    let data = await obs.call('GetInputList'); 
-        for (const key in data.inputs) {
-            let currID = data.inputs[key];
-            //console.log(currID.unversionedInputKind);
-            if(currID.unversionedInputKind === 'wasapi_input_capture')
-                MICS.push(data.inputs[key].inputName);
-        }
-}
 
 /**
  * 
@@ -85,3 +96,10 @@ async function getMicStatus(sourceName) {
     return status.inputMuted;
 }
 
+/**
+ * Disconnects the client from the OBS websocket
+ */
+async function closeConnection() {
+    await obs.disconnect();
+    console.log("Successfully closed connection");
+}

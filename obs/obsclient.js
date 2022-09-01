@@ -1,16 +1,7 @@
 const OBSWebSocket = require('obs-websocket-js').default;
 const auth = require('./auth.json');
+const TIME = require('../utils/time.js');
 const obs = new OBSWebSocket();
-
-
-/**
- * __________________________________________________________
- * 
- * BELOW IS EVERYTHING THAT HAS TO DO WITH OBS AND ITS WS
- * 
- * EVERYTHING ABOVE THIS COMMENT IS TWITCH CHAT RELATED
- * __________________________________________________________
- */
 
  const ip = 'ws://' + auth.ip + ':' + auth.port;
  const pass = auth.pass;
@@ -18,8 +9,6 @@ const obs = new OBSWebSocket();
  const MIC = 'Mic';
  const CAM = 'Cam';
  const TIMEOUT = 10*1000; // 10 sec
-
-runOBS();
 
  /**
   * Runs in 3 steps
@@ -29,7 +18,7 @@ runOBS();
   *    for both inputDevice's state to be reset to what they were before this function was executed.
   * 3. Disconnects the client from the websocket.
   */
-async function runOBS() {
+module.exports.runOBS =  async function() {
     await connectToWs();
     await swapActiveMic();
     setTimeout(closeConnection, TIMEOUT + 2000);
@@ -40,7 +29,7 @@ async function runOBS() {
  * Connection through websocket to OBS
  */
 obs.on('ConnectionOpened', () => {
-    console.log('Connection Opened');
+    console.log('Connected to OBS');
 });
 
 /**
@@ -50,7 +39,7 @@ async function connectToWs() {
     try {
         await obs.connect(ip,pass,auth.d)
     } catch (error) {
-        console.error('Failed to connect', error.code, error.message);
+        console.error('Failed to connect to OBS', error.code, error.message);
     }
 }
 
@@ -63,7 +52,7 @@ async function swapActiveMic() {
     let cam_status = await getMicStatus(CAM);
         
     if(!mic_status) {
-        console.log("a");
+        console.log(`${TIME.getTime()} | Swapping mics...`);
         await setMicToggle(MIC);
         await setMicToggle(CAM);
     }
@@ -75,14 +64,15 @@ async function swapActiveMic() {
  * @param {String} sourceName inputName of the source which muted status will be edited
  */
 async function setMicToggle(sourceName) {
-    await obs.call('ToggleInputMute',{inputName: sourceName})
-    console.log("Toggled " + sourceName);
-    console.log(`${sourceName} is ${await getMicStatus(sourceName)}`);
-
-    setTimeout(async function unmute() {
-        console.log("Re-Toggled " + sourceName);
+    try {
         await obs.call('ToggleInputMute',{inputName: sourceName})
-    }, TIMEOUT)
+        setTimeout(async function unmute() {
+            console.log(TIME.getTime() + " | Set " + sourceName + " to default audio state");
+            await obs.call('ToggleInputMute',{inputName: sourceName})
+        }, TIMEOUT)
+    } catch (error) {
+        console.log("Failed to change the state of input devices! \n" + error);
+    }
 }
 
 
@@ -92,14 +82,23 @@ async function setMicToggle(sourceName) {
  * @returns 
  */
 async function getMicStatus(sourceName) {
-    let status = await obs.call('GetInputMute',{inputName: sourceName});
-    return status.inputMuted;
+    try {
+        let status = await obs.call('GetInputMute',{inputName: sourceName});
+        return status.inputMuted;
+    } catch (error) {
+        console.log('Could not retrive data from sourceName! \n' + error);
+    }
 }
 
 /**
  * Disconnects the client from the OBS websocket
  */
 async function closeConnection() {
-    await obs.disconnect();
-    console.log("Successfully closed connection");
+    try {
+        await obs.disconnect();
+        console.log("Disconnected from OBS");
+    } catch (error) {
+        console.log("Failed to disconnect from OBS! \n" + error);
+    }
+   
 }

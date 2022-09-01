@@ -1,5 +1,21 @@
 {
+  "name": "obs-mic-swapper",
+  "version": "0.1.0",
+  "description": "A simple Node app created to listen for twitch chat actions to execute OBS actions",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js"
+  },
   "dependencies": {
-    "obs-websocket-js": "^5.0.1"
+    "fs-extra": "^8.1.0",
+    "obs-websocket-js": "^5.0.1",
+    "twitch": "^3.7.1",
+    "twitch-auth": "^1.0.3",
+    "twitch-chat-client": "^3.7.3",
+    "twitch-js": "2.0.0-beta.42",
+    "twitch-pubsub-client": "^3.7.2"
+  },
+  "engines": {
+    "node": "12.x"
   }
 }

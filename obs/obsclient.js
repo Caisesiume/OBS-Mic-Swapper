@@ -96,7 +96,7 @@ async function getMicStatus(sourceName) {
 async function closeConnection() {
     try {
         await obs.disconnect();
-        console.log("Disconnected from OBS");
+        console.log("Disconnected from OBS  \n");
     } catch (error) {
         console.log("Failed to disconnect from OBS! \n" + error);
     }

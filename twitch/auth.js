@@ -1,3 +1,8 @@
+/**
+* DEVELOPED AND PUBLISHED BY @Caisesiume on 2022-09-02
+* GPL-3.0 LICENSE
+*/
+
 const TwitchClient = require('twitch').default;
 const ChatClient = require('twitch-chat-client').default;
 const fs = require('fs-extra');

@@ -34,6 +34,7 @@ module.exports.listen = async function (twitchClient) {
     twitchClient.onPrivmsg(async(channel,user,message,msg) => {
         try {
             let rewardID = msg.tags.get("custom-reward-id");
+            // console.log(rewardID);
             if (rewardID !== undefined) {
                 if (rewardID === REWARD) {
                    OBS.runOBS();

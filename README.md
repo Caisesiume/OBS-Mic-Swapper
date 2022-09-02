@@ -2,10 +2,10 @@
 
 ## Quick links
 
-- Set up
-- Program Description
-- Example of Functionality
-- FAQ
+- [Set up](https://github.com/Caisesiume/OBS-Mic-Swapper#set-up)
+- [Program Description](https://github.com/Caisesiume/OBS-Mic-Swapper#program-description)
+- [Example of Functionality](https://github.com/Caisesiume/OBS-Mic-Swapper#example-of-functionality)
+- [FAQ](https://github.com/Caisesiume/OBS-Mic-Swapper#FAQ)
 
 ## Set up
 

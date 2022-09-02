@@ -1,11 +1,30 @@
-# OBS-Mic-Swapper
+<h1 align="center">OBS-Mic-Swapper</h1>
 
-## Quick links
+<h2 align="center">Shortcuts</h2>
 
-- [Set up](https://github.com/Caisesiume/OBS-Mic-Swapper#set-up)
-- [Program Description](https://github.com/Caisesiume/OBS-Mic-Swapper#program-description)
-- [Example of Functionality](https://github.com/Caisesiume/OBS-Mic-Swapper#example-of-functionality)
-- [FAQ](https://github.com/Caisesiume/OBS-Mic-Swapper#FAQ)
+<ul align="center">
+   <a href="https://github.com/Caisesiume/OBS-Mic-Swapper#set-up">Set up</a>
+ </ul>
+ <ul align="center">
+  <a href="https://github.com/Caisesiume/OBS-Mic-Swapper#program-description">Program Description</a>
+ </ul>
+ <ul align="center">
+  <a href="https://github.com/Caisesiume/OBS-Mic-Swapper#example-of-functionality">
+    Example of Functionality
+  </a>
+ </ul>
+ <ul align="center">
+  <a href="https://github.com/Caisesiume/OBS-Mic-Swapper#faq">
+    FAQ
+  </a>
+ </ul>
+ <ul align="center">
+  <a href="https://github.com/Caisesiume/OBS-Mic-Swapper#contact">
+    Contact Info
+  </a>
+ </ul>
+<br>
+<br>
 
 ## Set up
 
@@ -22,6 +41,10 @@
 > Important: OBS needs to be open in order for the script to connect to the websocket
 > 
 > If you don't want to launch this manually each time you start your OBS, <a href="https://stackoverflow.com/questions/20445599/auto-start-node-js-server-on-boot" target="_blank">check this out</a>.
+
+<br>
+<br>
+
 ## Program Description
 
 The system contains two main parts, one interacting with OBS and the other one interacting with Twitch Chat.
@@ -36,12 +59,18 @@ The connection to OBS is only first established upon a call from the other part,
 The listener connects to twitch chat as a read only bot that listens for specific custom [channel point rewards](https://help.twitch.tv/s/article/channel-points-guide) redeemed by chatters. <br>
 This part is active at all times when the program is running and executes the OBS part when the [channel point reward](https://help.twitch.tv/s/article/channel-points-guide) has been redeemed.
 
+<br>
+<br>
+
 ## Example of Functionality
 
 A user redeems the [custom channel point reward](https://help.twitch.tv/s/article/channel-points-guide?language=en_US#managing) "Mute Mic for 10s".
 This projects listener sees this reward in chat and tells the OBS part of the system to launch. 
 <br> The OBS websocket client starts and tries to connect to <a href="https://github.com/obsproject/obs-websocket/" target="_blank">OBS Websocket</a>.
 When connected, the audio state (muted/not muted) of the two input devices gets toggled. After 10 seconds, the input devices audio state gets once again toggled and returns to it's prior state.
+
+<br>
+<br>
 
 ## FAQ
 
@@ -75,3 +104,14 @@ Leave it open throughout your stream.
 ### Can I run this automatically when starting OBS? 
 
 By default, no. Perhaps you can! I personally have not looked into this too much, but maybe <a href="https://stackoverflow.com/questions/20445599/auto-start-node-js-server-on-boot" target="_blank">this</a> can be of some help?
+
+<br>
+<br>
+
+<h2 align="center"><strong>Contact<strong></h2>
+<p align="center">
+Questions? Reach me on Twitter or Discord! 
+
+<p align="center"><a href="https://twitter.com/caisesiume" target="_blank"><img src="https://upload.wikimedia.org/wikipedia/sco/thumb/9/9f/Twitter_bird_logo_2012.svg/1200px-Twitter_bird_logo_2012.svg.png" alt="Twitter Logo" width="28"/></a>
+  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+<a href="https://discordapp.com/users/277883519017943042" target="_blank"><img src="https://discord.com/assets/3437c10597c1526c3dbd98c737c2bcae.svg" alt="Discord Logo" width="28"/></a></p>

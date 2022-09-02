@@ -1,3 +1,8 @@
+/**
+* DEVELOPED AND PUBLISHED BY @Caisesiume on 2022-09-02
+* GPL-3.0 LICENSE
+*/
+
 const OBSWebSocket = require('obs-websocket-js').default;
 const auth = require('./auth.json');
 const TIME = require('../utils/time.js');

@@ -34,9 +34,9 @@
 3. Install the node modules for this program.
 4. Provide the <a href="https://dev.twitch.tv/docs/authentication/getting-tokens-oauth" target="_blank">OAuth data</a> from your bot account in <a href="https://github.com/Caisesiume/OBS-Mic-Swapper/blob/master/twitch/client.json" target="_blank">``/twitch/client.json``</a> and <a href="https://github.com/Caisesiume/OBS-Mic-Swapper/blob/master/twitch/tokens.json" target="_blank">``/twitch/tokens.json``</a>
 5. Fill in the websocket authentication details in <a href="https://github.com/Caisesiume/OBS-Mic-Swapper/blob/master/obs/auth.json" target="_blank">``/twitch/auth.json``</a>
-6. Change the CHANNEL and REWARD to your channel and your reward ID in [``/twitch/listener.js``](https://github.com/Caisesiume/OBS-Mic-Swapper/blob/master/twitch/listener.js#L4).
-7. Make sure the values of <a href="https://github.com/Caisesiume/OBS-Mic-Swapper/blob/master/obs/obsclient.js#L9" target="_blank">MIC</a> and <a href="https://github.com/Caisesiume/OBS-Mic-Swapper/blob/master/obs/obsclient.js#L10" target="_blank">CAM</a> matches the names of the two OBS audio sources you want the script to mute/unmute.
-> You can edit how long the toggle should last for by changing <a href="https://github.com/Caisesiume/OBS-Mic-Swapper/blob/master/obs/obsclient.js#L11" target="_blank">TIMEOUT</a>
+6. Change the CHANNEL and REWARD to your channel and your reward ID in [``/twitch/listener.js``](https://github.com/Caisesiume/OBS-Mic-Swapper/blob/master/twitch/listener.js#L9-L10).
+7. Make sure the values of <a href="https://github.com/Caisesiume/OBS-Mic-Swapper/blob/master/obs/obsclient.js#L14-L15" target="_blank">MIC and CAM</a> matches the names of the two OBS **audio sources** you want the script to activate / deactivate.
+> You can edit how long the toggle should last for by changing <a href="https://github.com/Caisesiume/OBS-Mic-Swapper/blob/master/obs/obsclient.js#L16" target="_blank">TIMEOUT</a>
 8. Now run the program
 > Important: OBS needs to be open in order for the script to connect to the websocket
 > 
@@ -62,12 +62,17 @@ This part is active at all times when the program is running and executes the OB
 <br>
 <br>
 
-## Example of Functionality
+## Example of Functionality (Use cases)
 
 A user redeems the [custom channel point reward](https://help.twitch.tv/s/article/channel-points-guide?language=en_US#managing) "Mute Mic for 10s".
 This projects listener sees this reward in chat and tells the OBS part of the system to launch. 
-<br> The OBS websocket client starts and tries to connect to <a href="https://github.com/obsproject/obs-websocket/" target="_blank">OBS Websocket</a>.
-When connected, the audio state (muted/not muted) of the two input devices gets toggled. After 10 seconds, the input devices audio state gets once again toggled and returns to it's prior state.
+<br> The OBS websocket client starts and tries to connect to your <a href="https://github.com/obsproject/obs-websocket/" target="_blank">OBS Websocket</a>.
+When connected, the audio state (muted/not muted) of the two defined audio input devices gets toggled. After 10 seconds, the input devices audio state gets once again toggled and returns to it's initial state.
+
+A user redeems the [custom channel point reward](https://help.twitch.tv/s/article/channel-points-guide?language=en_US#managing) "Swap to webcam mic for 10s"
+This projects listener sees this reward in chat and tells the OBS part of the system to launch. 
+<br> The OBS websocket client starts and tries to connect to your <a href="https://github.com/obsproject/obs-websocket/" target="_blank">OBS Websocket</a>.
+When connected, the audio state (muted/not muted) of the two defined audio input devices gets toggled. Meaning that your primary microphone gets muted and your secondary microphone (webcam) gets unmuted. After 10 seconds, the input devices audio state gets once again toggled and returns to it's initial state.
 
 <br>
 <br>
